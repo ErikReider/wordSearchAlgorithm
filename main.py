@@ -1,3 +1,5 @@
+#!/usr/bin/python3.9
+
 import math
 import random
 
@@ -5,77 +7,52 @@ wordsList = open("./words.txt")
 listy = wordsList.read().splitlines()
 wordsList.close()
 
-gridSize = 10
-grid = ["_" for i in range(gridSize**2)]
+gridBlank = "_"
 
-words = []
+gridSize = 10
+grid = [gridBlank for i in range(gridSize**2)]
+
+words: [str] = []
 
 i = 0
 while i < gridSize * 1.5:
     random.shuffle(listy)
-    word = listy[0]
+    word = listy.pop(0)
     if len(word) > 4 or len(word) < 3:
         continue
     words.append(word)
-    listy.pop(0)
     i += 1
 
 
-def tryWord(tempGrid: [str], word: str, ori: str, position: int):
-    xPos = position % gridSize
-    yPos = math.floor(position / gridSize)
+# Returns new grid with word in it if the word fits
+def tryWord(tempGrid: [str], word: str, ori: str, pos: int):
+    xPos = pos % gridSize
+    yPos = math.floor(pos / gridSize)
+    indexes: [int] = []
+    diagInc = 0
+    index = xPos if ori == 0 else yPos
 
-    if ori == 0:
-        if xPos > gridSize - len(word):
+    if xPos > gridSize - len(word) or yPos > gridSize - len(word):
+        return None
+
+    for char in word:
+        i = (index + gridSize * yPos) if ori == 0 else (xPos + gridSize*index)
+        if ori == 2:
+            i += diagInc
+            diagInc += 1
+        if tempGrid[i] == gridBlank or tempGrid[i] == char:
+            indexes.append(i)
+            index += 1
+        else:
             return None
-        index = xPos
-        indexes = []
-        for char in word:
-            i = index + (gridSize * yPos)
-            if tempGrid[i] == "_" or tempGrid[i] == char:
-                indexes.append(i)
-                index += 1
-            else:
-                return None
-        for i, pos in enumerate(indexes):
-            tempGrid[pos] = word[i]
-
-    elif ori == 1:
-        if yPos > gridSize - len(word):
-            return None
-        index = yPos
-        indexes = []
-        for char in word:
-            i = xPos + (gridSize * index)
-            if tempGrid[i] == "_" or tempGrid[i] == char:
-                indexes.append(i)
-                index += 1
-            else:
-                return None
-        for i, pos in enumerate(indexes):
-            tempGrid[pos] = word[i]
-
-    elif ori == 2:
-        if xPos > gridSize - len(word) or yPos > gridSize - len(word):
-            return None
-        index = yPos
-        diag = 0
-        indexes = []
-        for char in word:
-            i = xPos + (gridSize * index) + diag
-            if tempGrid[i] == "_" or tempGrid[i] == char:
-                indexes.append(i)
-                index += 1
-                diag += 1
-            else:
-                return None
-        for i, pos in enumerate(indexes):
-            tempGrid[pos] = word[i]
-
+    for i, pos in enumerate(indexes):
+        tempGrid[pos] = word[i]
     return tempGrid
 
-usedWords:[str] = []
 
+usedWords: [str] = []
+
+# Main loop
 wordIndex = 0
 orientations = [i for i in range(3)]
 positions = [i for i in range(gridSize**2)]
@@ -95,12 +72,6 @@ while wordIndex < len(words):
         usedWords.append(words[wordIndex])
         grid = gridTry
         wordIndex += 1
-        continue
 
-
-printString = ""
-for i, char in enumerate(grid):
-    printString += " " + str(char)
-    if i % gridSize == gridSize - 1 and i != len(grid) - 1:
-        printString += "\n"
-print(printString)
+# Print the result
+print("\n".join([" ".join(row) for row in [grid[i:i+gridSize] for i in range(0, len(grid), gridSize)]]))
