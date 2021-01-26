@@ -20,7 +20,9 @@ h o l e r i e
 ## C++
 
 ```Shell
-$ g++ main.cpp -o wordSearch.o && ./wordSearch.o
+$ g++ main.cpp -o wordSearch.o
+$ chmod +x ./wordSearch.o
+$ ./wordSearch.o
 f r e e d o m
 h n f w a y f
 w e i u r g q
