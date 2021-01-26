@@ -1,25 +1,35 @@
 # WordSearchAlgorithm
 
-## Run
+## Python
 
 ```Shell
 $ python3.9 main.py
-Getting random words...
-Running algorithm...
-f p u f e a r
-a e a q v g m
-u r a r k h l
-l i e k t i i
-t o u b d m v
-r d f v y l e
-b l o c k m d
-Time: 0.0 seconds
-Number of total words: 7
-Number of used words: 7
+a i j k s m q
+a g h y d y f
+v w e s v o t
+b r i g h t i
+f o r g e t t
+f a s t n v l
+h o l e r i e
 ```
 
-## Dependencies
+### Python Dependencies
+
+- colorama
+
+## C++
 
 ```Shell
-$ python3.9 -m pip install colorama
+$ g++ main.cpp -o wordSearch.o && ./wordSearch.o
+f r e e d o m
+h n f w a y f
+w e i u r g q
+i w c m o z l
+l s s i t j d
+d s t u p i d
+f r e e z e h
 ```
+
+### C++ Dependencies
+
+- g++
