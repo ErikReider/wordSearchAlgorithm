@@ -1,20 +1,10 @@
-#include <bits/types/FILE.h>
-#include <math.h>
-#include <stdio.h>
 #include <algorithm>
-#include <cmath>
-#include <cstdlib>
-#include <random>
-
-#include <cstdio>
-#include <ctime>
 #include <iostream>
-#include <string>
-#include <vector>
+#include <random>
 
 using namespace std;
 
-const char *gridBlank = "_";
+static const char *gridBlank = "_";
 
 static random_device rd;
 
