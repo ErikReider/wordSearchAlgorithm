@@ -5,14 +5,11 @@ import random
 import string
 from colorama import Fore, Back, Style
 
-startTime = time.time()
-
 gridSize = 7
 numberOfWords = gridSize**2 / 8
 gridBlank = "_"
 
 # Gets a list with random words
-print("Getting random words...")
 wordsList = open("./words.txt")
 listy = wordsList.read().splitlines()
 wordsList.close()
@@ -83,14 +80,8 @@ def getGrid(words: [str], fillBlank=True):
     return (grid, usedWords)
 
 
-print("Running algorithm...")
 grid, usedWords = getGrid(words)
 
 # Print the result
 print("\n".join([" ".join(row) for row in [grid[i:i+gridSize]
                                            for i in range(0, len(grid), gridSize)]]))
-
-endTime = time.time()
-print("Time:", str(round(endTime - startTime, 2)), "seconds")
-print("Number of total words:", len(words))
-print("Number of used words:", len(usedWords))
